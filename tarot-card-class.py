@@ -41,19 +41,41 @@ class Number(Enum):
         return f"Number.(self.name)"
 
 
+class Element(Enum):
+    FIRE = "火"
+    EARTH = "土"
+    AIR = "風"
+    WATER = "水"
+
+    def __str__(self):
+        return self.value
+
+    def __repr__(self):
+        return f"Suit.{self.name}"
+
+
 class Card:
-    def __init__(self, suit, number):
-        if not (isinstance(suit, Suit) and isinstance(number, Number)):
+    def __init__(self, suit, number, element):
+        if not (
+            isinstance(suit, Suit)
+            and isinstance(number, Number)
+            and isinstance(element, Element)
+        ):
             raise ValueError
         self.suit = suit
         self.number = number
+        self.element = element
 
     def __str__(self):
-        return str(self.suit) + str(self.number)
+        return str(self.suit) + str(self.number) + str(self.element)
 
     def __repr__(self):
         return self.__str__()
 
 
-minor_arcana = [Card(suit, number) for suit in Suit for number in Number]
+minor_arcana = [
+    Card(suit, number, element)
+    for suit, element in zip(Suit, Element)
+    for number in Number
+]
 print(minor_arcana)
