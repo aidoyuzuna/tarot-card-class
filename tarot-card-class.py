@@ -17,8 +17,5 @@ numbers = [
     "キング",
 ]
 
-for su in suits:
-    for num in numbers:
-        minor_arcana.append(su + num)
-
+minor_arcana = [(suits, numbers) for suits in range(4) for numbers in range(1, 14)]
 print(minor_arcana)
