@@ -1,4 +1,35 @@
-from enum import Enum, auto
+from enum import Enum
+
+
+class MajorArcana(Enum):
+    FOOL = "愚者"
+    MAGICIAN = "魔術師"
+    HIGH_PRIESTESS = "女教皇"
+    EMPRESS = "女帝"
+    EMPEROR = "皇帝"
+    HIEROOHANT = "法王"
+    LOVERS = "恋人"
+    CHARIOT = "戦車"
+    STRENGTH = "力"
+    HERMIT = "隠者"
+    WHEEL_OF_FORTUNE = "運命の輪"
+    JUSTICE = "正義"
+    HANGED_MAN = "吊るされた男"
+    DEATH = "死神"
+    TEMPERANCE = "節制"
+    DEVIL = "悪魔"
+    TOWER = "塔"
+    STAR = "星"
+    MOON = "月"
+    SUN = "太陽"
+    JUDGEMENT = "審判"
+    WORLD = "世界"
+
+    def __str__(self):
+        return self.value
+
+    def __repr__(self):
+        return f"Suit.{self.name}"
 
 
 class Suit(Enum):
@@ -38,7 +69,7 @@ class Number(Enum):
         return self.string
 
     def __repr__(self):
-        return f"Number.(self.name)"
+        return f"Number.{self.name}"
 
 
 class Element(Enum):
@@ -51,10 +82,24 @@ class Element(Enum):
         return self.value
 
     def __repr__(self):
-        return f"Suit.{self.name}"
+        return f"Element.{self.name}"
 
 
-class Card:
+class MajorCard:
+    def __init__(self, major_arcana, element):
+        if not (isinstance(major_arcana, MajorArcana)):
+            raise ValueError
+        self.major_arcana = major_arcana
+        self.element = element
+
+    def __str__(self):
+        return str(self.major_arcana) + str(self.element)
+
+    def __repr__(self):
+        return self.__str__()
+
+
+class MinorCard:
     def __init__(self, suit, number, element):
         if not (
             isinstance(suit, Suit)
@@ -73,9 +118,44 @@ class Card:
         return self.__str__()
 
 
+major_element = [
+    "風",
+    "風",
+    "水",
+    "土",
+    "火",
+    "土",
+    "風",
+    "水",
+    "火",
+    "土",
+    "火",
+    "風",
+    "水",
+    "水",
+    "火",
+    "土",
+    "土",
+    "風",
+    "水",
+    "火",
+    "火",
+    "土",
+]
+
+arcana = []
+count = 0
+for major_arcana in MajorArcana:
+    element_item = major_element[count]
+    element = Element(element_item)
+    arcana.append(MajorCard(major_arcana, element))
+    count += 1
+
 minor_arcana = [
-    Card(suit, number, element)
+    MinorCard(suit, number, element)
     for suit, element in zip(Suit, Element)
     for number in Number
 ]
+
+print(arcana)
 print(minor_arcana)
